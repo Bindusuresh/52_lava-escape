@@ -46,23 +46,22 @@ python main.py
 
 Each task must be completed using an iterative process involving LLM suggestions and your critical code review.
 
-### Task 1: Fix the one-way platform penetration bug
+### Task 1: Fix the Platform Underside Collision Snapping Bug
 
-When jumping up through the bottom of a platform while falling back down, or when grazing the underside of a platform during an upward leap, the player's landing condition triggers incorrectly. In player.update(), the platform collision check evaluates: if self.rect.colliderect(p) and self.vel_y > 0 and self.rect.bottom <= p.bottom + 10:
-   
-Because self.rect.bottom <= p.bottom + 10 is overly generous, the player can clip through the underside of platforms or get snapped to the top of a platform even when their feet barely entered from below. Fix the vertical collision resolution so the player only lands if their feet were strictly above or near the platform's top edge before moving downward in that frame (e.g., verifying self.rect.bottom - self.vel_y <= p.top + 2), ensuring clean, reliable one-way platform physics.
+When jumping up through platforms, the player's feet prematurely snap to the top surface from below or clip through solid edges rather than passing cleanly through one-way ledges. Ensure landing resolution only triggers when the player is descending and strictly clears the platform's upper edge.
 
-### Task 2: Implement crumbling platforms
+### Task 2: Implement Crumbling Platform Hazards
 
-Make select platforms unstable. When the player lands on a crumbling platform, trigger a 1-second countdown timer or visual shaking animation before the platform breaks and vanishes from self.platforms, forcing the player to keep moving rapidly.
+Platforms remain permanently solid once stepped on, allowing players to stall without risk. Introduce fragile platforms that begin shaking and disintegrate shortly after the player lands on them, forcing constant upward mobility.
  
-### Task 3: Implement spring bounce platforms
+### Task 3: Implement High-Velocity Spring Platforms
 
-Add special yellow spring platforms throughout the generated platform list. When the player lands on a spring platform, launch them upward with double jump velocity (e.g., setting vel_y = -22) along with an energetic recoil animation.
+All platform surfaces currently provide identical standard bounce heights. Add distinct high-powered spring platforms that launch the player upward with bonus vertical velocity when touched.
 
-### Task 4: Implement a lava surge warning and speed HUD
+### Task 4: Implement a Rising Danger HUD & Lava Burst Surges
 
-Provide visual feedback for rising danger by adding a danger meter HUD element that fills up as self.lava_rise increases. Additionally, every 15 seconds trigger a brief "Lava Burst" warning that temporarily accelerates the lava's ascent speed for 3 seconds before returning to normal.
+Players have limited visual notice of shifting lava ascent rates. Implement a danger meter tracking the speed of the rising lava, paired with periodic lava surge phases that briefly accelerate the liquid hazard upwards.
+
 ---
 
 ## Expected Behavior
